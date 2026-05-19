@@ -8,29 +8,28 @@ def take_command():
 
         print("\nListening...")
 
-        # reduce background noise
-        recognizer.adjust_for_ambient_noise(source, duration=1)
+        recognizer.pause_threshold = 1.5
 
-        # listening time
-        audio = recognizer.listen(source)
+        audio = recognizer.listen(
+            source,
+            phrase_time_limit=7
+        )
 
     try:
+
         print("Recognizing...")
 
-        command = recognizer.recognize_google(audio)
+        command = recognizer.recognize_google(
+            audio,
+            language="en-IN"
+        )
 
-        print("You said:", command)
+        print(f"You said: {command}")
 
         return command.lower()
 
-    except sr.UnknownValueError:
+    except Exception:
 
-        print("Could not understand audio.")
-
-        return ""
-
-    except sr.RequestError:
-
-        print("Internet connection issue.")
+        print("Could not understand.")
 
         return ""
