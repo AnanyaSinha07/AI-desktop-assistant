@@ -1,3 +1,4 @@
+import pywhatkit
 import webbrowser
 import os
 import wikipediaapi
@@ -80,6 +81,18 @@ def execute_command(command, speak):
 
             speak("Something went wrong")
 
+        # Play Music
+
+    elif "play" in command:
+
+        song = command.replace("play", "")
+
+        song = song.strip()
+
+        speak(f"Playing {song}")
+
+        pywhatkit.playonyt(song)
+        
     else:
 
         speak("Command not recognized")
